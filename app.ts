@@ -19,3 +19,10 @@ const person2 = {
   hobbies: ['eat', 'walk'],
   role: Role.ADMIN
 }
+
+//Union type, can work with multiple input types but needs specific behavior definition and scoping
+function combine(input1: number | string | boolean, input2: number | string) {
+  let result;
+  if (typeof input1 === 'number' && typeof input2 === 'number') result = input1 + input2;
+  return result;
+}
