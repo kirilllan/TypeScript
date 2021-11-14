@@ -21,8 +21,11 @@ const person2 = {
 }
 
 //Union type, can work with multiple input types but needs specific behavior definition and scoping
-function combine(input1: number | string | boolean, input2: number | string) {
-  let result;
+//Literal type - exact value(s) it should hold
+function combine(input1: number | string | boolean, input2: number | string, resultConversion: 'as string' | 'as number') {
+  let result
   if (typeof input1 === 'number' && typeof input2 === 'number') result = input1 + input2;
-  return result;
+  if (resultConversion === 'as string') return input1 + '' + input2
+  return result
 }
+combine(1, 2, 'as string')
