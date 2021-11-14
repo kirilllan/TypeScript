@@ -29,3 +29,6 @@ function combine(input1: number | string | boolean, input2: number | string, res
   return result
 }
 combine(1, 2, 'as string')
+
+//Type alias
+type numOrString = number | string
