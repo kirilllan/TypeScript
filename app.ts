@@ -32,3 +32,12 @@ combine(1, 2, 'as string')
 
 //Type alias
 type numOrString = number | string
+
+//Fn return types & void
+function add(n1: number, n2: number): number {
+  return // no error..
+}
+function printResult(num: number): void {
+  console.log('Result: ' + num)
+}
+printResult(add(5, 12))
