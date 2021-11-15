@@ -41,3 +41,7 @@ function printResult(num: number): void {
   console.log('Result: ' + num)
 }
 printResult(add(5, 12))
+
+//using Fn as a type. Allow to specify which type of function we will use
+let combinedValues: (a: number, b: number) => number
+combinedValues = add
