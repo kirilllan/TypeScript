@@ -51,3 +51,6 @@ function addAndCb(n1: number, n2: number, cb: (num: number) => void) {
   cb(result)
 }
 addAndCb(10, 20, (res) => { console.log(res) })
+
+//unknown type. more restrictive than 'any'. 
+let userInput: unknown
