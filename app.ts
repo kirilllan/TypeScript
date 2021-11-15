@@ -45,3 +45,9 @@ printResult(add(5, 12))
 //using Fn as a type. Allow to specify which type of function we will use
 let combinedValues: (a: number, b: number) => number
 combinedValues = add
+//callback example
+function addAndCb(n1: number, n2: number, cb: (num: number) => void) {
+  const result = n1 + n2
+  cb(result)
+}
+addAndCb(10, 20, (res) => { console.log(res) })
