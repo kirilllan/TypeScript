@@ -54,3 +54,10 @@ addAndCb(10, 20, (res) => { console.log(res) })
 
 //unknown type. more restrictive than 'any'. 
 let userInput: unknown
+
+//never type. never returns anything
+function generateError(msg: string, code: number): never {
+  throw { message: MessageChannel, errorCode: code }
+  //while (true) {}
+}
+generateError('An error has occurred', 500)
