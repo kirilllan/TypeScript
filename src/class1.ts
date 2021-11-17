@@ -36,6 +36,12 @@ class Department2 {
   }
 }
 
+class ITDepartment extends Department2 {
+  constructor(public admins: string[]) {
+    super('IT')//calls parent classes constructor
+  }
+}
+
 const accounting2 = new Department2('Accounting')
 accounting2.addEmployee('emp 1')
 accounting2.addEmployee('emp 2')
