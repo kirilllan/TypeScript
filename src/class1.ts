@@ -22,7 +22,7 @@ accountingCopy2.describe()
 
 class Department2 {
   private employees: string[] = []
-  constructor(public name: string) {
+  constructor(public readonly name: string) {
   }
   describe(this: Department) {
     console.log('Department: ' + this.name)
