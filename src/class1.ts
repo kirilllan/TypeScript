@@ -18,3 +18,27 @@ const accounting = new Department('Accounting')
 const accountingCopy2 = { name: 'this is ok now', describe: accounting.describe }
 accountingCopy2.describe()
 //
+
+
+class Department2 {
+  name: string
+  employees: string[] = []
+  constructor(n: string) {
+    this.name = n
+  }
+  describe(this: Department) {
+    console.log('Department: ' + this.name)
+  }
+  addEmployee(employee: string) {
+    this.employees.push(employee)
+  }
+  printEmployeeInformation() {
+    console.log(this.employees.length)
+    console.log(this.employees)
+  }
+}
+
+const accounting2 = new Department2('Accounting')
+accounting2.addEmployee('emp 1')
+accounting2.addEmployee('emp 2')
+accounting.describe()
