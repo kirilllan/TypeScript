@@ -21,10 +21,8 @@ accountingCopy2.describe()
 
 
 class Department2 {
-  name: string
-  employees: string[] = []
-  constructor(n: string) {
-    this.name = n
+  private employees: string[] = []
+  constructor(public name: string) {
   }
   describe(this: Department) {
     console.log('Department: ' + this.name)
