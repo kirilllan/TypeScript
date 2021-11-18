@@ -37,8 +37,17 @@ class Department2 {
 }
 
 class ITDepartment extends Department2 {
-  constructor(public admins: string[]) {
+  private lastReport: string
+  get mostRecentReport() {
+    if (this.lastReport) return this.lastReport
+    else return 'No reports available'
+  }
+  set mostRecentReport(value: string) {
+    this.lastReport = value
+  }
+  constructor(public admins: string[], reports: string[]) {
     super('IT')//calls parent classes constructor
+    this.lastReport = reports[0]
   }
   addAdmin(employee: string) {
     this.employees.push(employee + '-admin')
@@ -49,3 +58,5 @@ const accounting2 = new Department2('Accounting')
 accounting2.addEmployee('emp 1')
 accounting2.addEmployee('emp 2')
 accounting.describe()
+
+const ITDepartment1 = new ITDepartment(['Jo'], [])
