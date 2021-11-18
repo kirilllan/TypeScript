@@ -21,7 +21,7 @@ accountingCopy2.describe()
 
 
 class Department2 {
-  private employees: string[] = []
+  protected employees: string[] = []
   constructor(public readonly name: string) {
   }
   describe(this: Department) {
@@ -39,6 +39,9 @@ class Department2 {
 class ITDepartment extends Department2 {
   constructor(public admins: string[]) {
     super('IT')//calls parent classes constructor
+  }
+  addAdmin(employee: string) {
+    this.employees.push(employee + '-admin')
   }
 }
 
