@@ -60,3 +60,24 @@ accounting2.addEmployee('emp 2')
 accounting.describe()
 
 const ITDepartment1 = new ITDepartment(['Jo'], [])
+
+//Implementing singleton pattern
+class onlyOneDepartment {
+  private static instance: onlyOneDepartment
+  private constructor(private members: string[]) {
+  }
+  static getInstance() {
+    if (onlyOneDepartment.instance) return this.instance
+    this.instance = new onlyOneDepartment(['memb1', ' memb2'])
+    return this.instance
+  }
+  public get getAllMembers() {
+    console.log(this.members)
+    return this.members
+  }
+}
+//same instance:
+const onlyOneDepartment1 = onlyOneDepartment.getInstance()
+const onlyOneDepartment2 = onlyOneDepartment.getInstance()
+console.log(onlyOneDepartment1, onlyOneDepartment2)
+//
