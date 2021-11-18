@@ -20,3 +20,8 @@ let user1: Person
 user1 = { name: 'somename', age: 0, greet() { } }
 
 let user2 = new Person1('mm')
+
+//interface as function type
+interface AddFn {
+  (a: number, b: number): number
+}
