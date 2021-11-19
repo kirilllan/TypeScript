@@ -97,3 +97,15 @@ const errorBag: ErrorContainer = {
   email: 'Not a valid email',
   pwd: 'too short password'
 }
+
+
+// function overloads
+//const result = add(1, 5) as string
+
+function add2(a: number, b: number): number
+function add2(a: string, b: string): string
+function add2(a: Combinable, b: Combinable) {
+  return (typeof a === 'string' || typeof b === 'string') ? (a + '') + b : a + b
+}
+const result2 = add2('a ', 'b')
+result2.split(' ') // available now since result2 is not Combinable type
