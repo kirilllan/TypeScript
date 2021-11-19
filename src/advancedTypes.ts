@@ -78,3 +78,11 @@ function moveAnimal(animal: Animal) {
     case 'horse': log('horsie')
   }
 }
+
+
+// type casting
+const userInputElement = <HTMLInputElement>document.getElementById('user-input')
+const userInputElement2 = document.getElementById('user-input')! as HTMLInputElement
+const userInputElement3 = document.getElementById('user-input')
+userInputElement.value = 'qw'
+if (userInputElement3) (userInputElement3 as HTMLInputElement).value = 'qw'
