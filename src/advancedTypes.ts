@@ -57,3 +57,24 @@ function useVehicle(vehicle: Vehicle) {
 }
 
 useVehicle(v1); useVehicle(v2);
+
+
+// discriminated unions (helps with typeguards), understand which properties are available/not available for such object
+interface Bird {
+  kind: 'bird'
+  flyingSpeed: number
+}
+
+interface Horse {
+  kind: 'horse'
+  runningSpeed: number
+}
+
+type Animal = Bird | Horse
+
+function moveAnimal(animal: Animal) {
+  switch (animal.kind) {
+    case 'bird': log('birdie')
+    case 'horse': log('horsie')
+  }
+}
