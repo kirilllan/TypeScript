@@ -31,6 +31,29 @@ function add(a: Combinable, b: Combinable) {
 
 type UnknownEmployee = Employee | Admin
 
-function printEmployeeInformation(emp: UnknownEmployee) {
+const log = console.log
 
+function printEmployeeInformation(emp: UnknownEmployee) {
+  if ('privileges' in emp) log('Privileges: ' + emp.privileges)
+  if ('startDate' in emp) log('Start Date: ' + emp.startDate)
 }
+
+class Car {
+  drive() { console.log('driving...') }
+}
+
+class Truck {
+  drive() { console.log('driving  truck...') }
+  loadCargo(amount: number) { console.log('loading cargo: ' + amount) }
+}
+
+type Vehicle = Car | Truck
+
+const v1 = new Car(), v2 = new Truck()
+
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive()
+  if (vehicle instanceof Truck) vehicle.loadCargo(21)
+}
+
+useVehicle(v1); useVehicle(v2);
