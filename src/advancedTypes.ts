@@ -83,6 +83,17 @@ function moveAnimal(animal: Animal) {
 // type casting
 const userInputElement = <HTMLInputElement>document.getElementById('user-input')
 const userInputElement2 = document.getElementById('user-input')! as HTMLInputElement
-const userInputElement3 = document.getElementById('user-input')
 userInputElement.value = 'qw'
+const userInputElement3 = document.getElementById('user-input')
 if (userInputElement3) (userInputElement3 as HTMLInputElement).value = 'qw'
+
+
+// indexed properties
+interface ErrorContainer {
+  [prop: string]: string //unknown: prop name, prop count. known:every prop which is added must have str key & str val
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email',
+  pwd: 'too short password'
+}
