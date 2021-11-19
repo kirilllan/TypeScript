@@ -25,3 +25,12 @@ let user2 = new Person1('mm')
 interface AddFn {
   (a: number, b: number): number
 }
+
+
+
+// optionals
+interface I { name?: string }
+class Optionals {
+  name?: string
+  constructor(n?: string) { if (n) this.name = n }
+}
