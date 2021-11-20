@@ -109,3 +109,12 @@ function add2(a: Combinable, b: Combinable) {
 }
 const result2 = add2('a ', 'b')
 result2.split(' ') // available now since result2 is not Combinable type
+
+
+// optional chaining
+const fetchedUserData = {
+  id: 'i1',
+  name: 'name1',
+  job: { title: 'jobTitle1', description: 'jobDescription1' }
+}
+console.log(fetchedUserData?.job?.title)
