@@ -113,8 +113,11 @@ result2.split(' ') // available now since result2 is not Combinable type
 
 // optional chaining
 const fetchedUserData = {
-  id: 'i1',
-  name: 'name1',
   job: { title: 'jobTitle1', description: 'jobDescription1' }
 }
 console.log(fetchedUserData?.job?.title)
+
+
+// nullish coalescing
+const usrInput = null
+const storedData = usrInput ?? 'DEFAULT' // if usrInput === undefined or usrInput === null
