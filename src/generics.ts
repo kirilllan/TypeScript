@@ -17,3 +17,14 @@ function merge<T extends object, U extends object>(objA: T, objB: U) { // TS kno
 }
 const mergedObj = merge({ name: 'na1' }, { age: 0 })
 
+
+//
+interface Lengthy {
+  length: number
+}
+
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+  let descriptionText = 'Got no length'
+  if (element.length > 0) descriptionText = 'Got length: ' + element.length
+  return [element, descriptionText]
+}
