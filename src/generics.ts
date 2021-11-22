@@ -30,8 +30,17 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
 }
 
 
-//
+// "ensuring correct object structure
 function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
   return obj[key]
 }
 //extractAndConvert({ hairs: 'y' }, 'hairs')
+
+
+// generic classes
+class Storage2<T> {
+  private data: T[] = []
+  addItem(item: T) { this.data.push(item) }
+  removeItem(item: T) { this.data.splice(this.data.indexOf(item), 1) }
+  getItems() { return this.data }
+}
