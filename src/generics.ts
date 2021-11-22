@@ -37,8 +37,8 @@ function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) 
 //extractAndConvert({ hairs: 'y' }, 'hairs')
 
 
-// generic classes. generic types are there to make your life easier and 
-// to give you that perfect combination of full flexibility and type safety
+// generic classes
+// to give you combination of full flexibility and type safety
 class DataStorage<T> {
   private data: T[] = []
   addItem(item: T) { this.data.push(item) }
@@ -49,3 +49,18 @@ class DataStorage<T> {
 const textStorage = new DataStorage<string>()
 const numberStorage = new DataStorage<number>()
 // const objStorage = new DataStorage<object>() logic error
+
+
+// generic utility types
+interface Goal {
+  title: string
+  completeUntil: Date
+}
+
+function createCourseGoal(title: string, date: Date): Goal {
+  //return {title: title, completeUntil: date}
+  let goal: Partial<Goal> = {} // this is and obj that in the end will be Goal
+  goal.title = title
+  goal.completeUntil = date
+  return goal
+}
