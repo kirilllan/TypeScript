@@ -62,5 +62,8 @@ function createCourseGoal(title: string, date: Date): Goal {
   let goal: Partial<Goal> = {} // this is and obj that in the end will be Goal
   goal.title = title
   goal.completeUntil = date
-  return goal
+  return goal as Goal
 }
+
+const someNames: Readonly<string[]> = [" ", "  "]
+//someNames.push("   ") can't
