@@ -1,9 +1,11 @@
-function Logger(constructor: Function) {
-  console.log('from Logger')
-  console.log(constructor)
+function Logger(logString: string) {
+  return function (constructor: Function) {
+    console.log(logString)
+    console.log(constructor)
+  }
 }
 
-@Logger
+@Logger('from decorator ')
 class Person {
   name = " "
   constructor() { }
