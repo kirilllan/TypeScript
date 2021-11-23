@@ -16,7 +16,7 @@ function Logger(logString: string) {
 //   }
 // }
 function WithTemplate(template: string, hookId: string) {
-  return function <T extends { new(...args: any[]): {} }>(originalConstructor: T) {
+  return function <T extends { new(...args: any[]): { name: string } }>(originalConstructor: T) {
     //logic below executes when you define the class
     //   const hookElement = document.getElementById(hookId)
     //   const p = new originalConstructor()
@@ -26,7 +26,7 @@ function WithTemplate(template: string, hookId: string) {
     //   }
     // }
     return class extends originalConstructor {
-      constructor(...args: any[]) {
+      constructor(..._: any[]) {
         super()
         // new logic below executes only when you instantiate the class
         const hookElement = document.getElementById(hookId)
