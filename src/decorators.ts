@@ -5,13 +5,36 @@ function Logger(logString: string) {
   }
 }
 
+// function WithTemplate(template: string, hookId: string) {
+//   return function (originalConstructor: any) {
+//     const hookElement = document.getElementById(hookId)
+//     const p = new originalConstructor()
+//     if (hookElement) {
+//       hookElement.innerHTML = template
+//       hookElement.querySelector('h1')!.textContent = p.name
+//     }
+//   }
+// }
 function WithTemplate(template: string, hookId: string) {
-  return function (constructor: any) {
-    const hookElement = document.getElementById(hookId)
-    const p = new constructor()
-    if (hookElement) {
-      hookElement.innerHTML = template
-      hookElement.querySelector('h1')!.textContent = p.name
+  return function <T extends { new(...args: any[]): {} }>(originalConstructor: T) {
+    //logic below executes when you define the class
+    //   const hookElement = document.getElementById(hookId)
+    //   const p = new originalConstructor()
+    //   if (hookElement) {
+    //     hookElement.innerHTML = template
+    //     hookElement.querySelector('h1')!.textContent = p.name
+    //   }
+    // }
+    return class extends originalConstructor {
+      constructor(...args: any[]) {
+        super()
+        // new logic below executes only when you instantiate the class
+        const hookElement = document.getElementById(hookId)
+        if (hookElement) {
+          hookElement.innerHTML = template
+          hookElement.querySelector('h1')!.textContent = this.name
+        }
+      }
     }
   }
 }
