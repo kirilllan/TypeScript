@@ -27,7 +27,12 @@ const person1 = new Person()
 
 
 // property decorators
+function Log(target: any, propertyName: string | Symbol) {
+  console.log(target, propertyName)//target is Class, propertyName is 'title' in this case
+}
+
 class Product {
+  @Log
   title: string
   private _price: number
   set price(val: number) {
