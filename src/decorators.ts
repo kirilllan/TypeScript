@@ -114,8 +114,20 @@ document.querySelector('button')!.addEventListener('click', p.showMessage)
 
 
 // validation with decorators
+function Required() {
+
+}
+
+function PositiveNumber() {
+
+}
+
+function validate(obj: object) { }
+
 class Course {
+  @Required
   title: string
+  @PositiveNumber
   price: number
   constructor(t: string, p: number) {
     this.title = t
@@ -131,5 +143,8 @@ form.addEventListener('submit', e => {
   const title = titleEl.value
   const price = +priceEl.value
 
-  const created = new Course(title, price)
+  const createdCourse = new Course(title, price)
+  if (!validate(createdCourse)) {
+    throw new Error
+  }
 })
