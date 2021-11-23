@@ -16,6 +16,7 @@ function Logger(logString: string) {
 //   }
 // }
 function WithTemplate(template: string, hookId: string) {
+  // new() describes the shape of the constructor
   return function <T extends { new(...args: any[]): { name: string } }>(originalConstructor: T) {
     //logic below executes when you define the class
     //   const hookElement = document.getElementById(hookId)
@@ -65,6 +66,7 @@ function Log3(target: any, name: string | Symbol, descriptor: PropertyDescriptor
 }
 
 function Log4(target: any, name: string | Symbol, position: number) {
+  console.log(target, name, position)
   //name is getPriceWithTax position is arguments position, 0
 }
 
@@ -85,3 +87,27 @@ class Product {
     return this._price * (1 + tax)
   }
 }
+
+
+// autobind decorator
+function Autobind(_: any, __: string | Symbol, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFunction = originalMethod.bind(this)
+      return boundFunction
+    }
+  }
+  return adjustedDescriptor
+}
+class Printer {
+  message = 'this works'
+  @Autobind
+  showMessage() {
+    console.log(this.message)
+  }
+}
+const p = new Printer()
+document.querySelector('button')!.addEventListener('click', p.showMessage)
