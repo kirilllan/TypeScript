@@ -120,12 +120,14 @@ interface ValidatorConfig {
   }
 }
 
+const registeredValidators: ValidatorConfig = {}
+
 function Required() {
 
 }
 
-function PositiveNumber() {
-
+function PositiveNumber(target: any, propertyNAme: string) {
+  registeredValidators[target.constructor]
 }
 
 function validate(obj: object) { }
