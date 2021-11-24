@@ -114,6 +114,12 @@ document.querySelector('button')!.addEventListener('click', p.showMessage)
 
 
 // validation with decorators
+interface ValidatorConfig {
+  [property: string]: {
+    [validatableProperty: string]: string[]
+  }
+}
+
 function Required() {
 
 }
