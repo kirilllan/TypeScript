@@ -134,7 +134,19 @@ function PositiveNumber(target: any, propertyName: string) {
   }
 }
 
-function validate(obj: object) { }
+function validate(obj: any) {
+  const objValidatorConfig = registeredValidators[obj.constructor.name]
+  if (!objValidatorConfig) return true
+  for (const prop in objValidatorConfig) {
+    for (const validator of objValidatorConfig[prop]) {
+      switch (validator) {
+        case 'required': return !!obj[prop]
+        case 'positive': return obj[prop] > 0
+      }
+    }
+  }
+  return true
+}
 
 class Course {
   @Required
