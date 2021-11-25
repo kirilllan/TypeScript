@@ -32,9 +32,16 @@ class ProjectInput {
     this.configure()
     this.attach()
   }
+  private gatherUserInput(): [string, string, number] {
+    const enteredTitle = this.titleInputElement.value
+    const enteredDescription = this.descriptionInputElement.value
+    const enteredPeople = this.peopleInputElement.value
+    if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredPeople.trim().length === 0) 123
+  }
   @Autobind
   private submitHandler(event: Event) {
     event.preventDefault()
+    const userInput = this.gatherUserInput()
   }
   private configure() {
     this.element.addEventListener('submit', this.submitHandler)
