@@ -1,3 +1,15 @@
+class ProjectState {
+  private projects: any[] = []
+  addProject(title: string, description: string, numOfPeople: number) {
+    const newProject = {
+      id: '' + Math.random(),
+      title: title,
+      description: description,
+      people: numOfPeople
+    }
+  }
+}
+
 interface Validatable {
   value: string | number
   required?: boolean
@@ -80,6 +92,7 @@ class ProjectInput {
       min: 1
     }
     if (!validate(titleValidatable) && !validate(descriptionValidatable) && !validate(peopleValidatable)) alert('invalid input')
+    else return [enteredTitle, enteredDescription, +enteredPeople]
   }
   private clearInputs() {
     this.titleInputElement.value = ''
