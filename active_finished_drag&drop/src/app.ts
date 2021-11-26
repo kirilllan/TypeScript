@@ -65,7 +65,21 @@ class ProjectInput {
     const enteredTitle = this.titleInputElement.value
     const enteredDescription = this.descriptionInputElement.value
     const enteredPeople = this.peopleInputElement.value
-    validate()
+    const titleValidatable: Validatable = {
+      value: enteredTitle,
+      required: true
+    }
+    const descriptionValidatable: Validatable = {
+      value: enteredDescription,
+      required: true,
+      minLength: 5
+    }
+    const peopleValidatable: Validatable = {
+      value: +enteredPeople,
+      required: true,
+      min: 1
+    }
+    if (!validate(titleValidatable) && !validate(descriptionValidatable) && !validate(peopleValidatable)) alert('invalid input')
   }
   private clearInputs() {
     this.titleInputElement.value = ''
