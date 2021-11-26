@@ -39,10 +39,19 @@ class ProjectInput {
     if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredPeople.trim().length === 0) return
     else return [enteredTitle, enteredDescription, +enteredPeople]
   }
+  private clearInputs() {
+    this.titleInputElement.value = ''
+    this.descriptionInputElement.value = ''
+    this.peopleInputElement.value = ''
+  }
   @Autobind
   private submitHandler(event: Event) {
     event.preventDefault()
     const userInput = this.gatherUserInput()
+    if (Array.isArray(userInput)) {
+      const [title, desc, people] = userInput
+      this.clearInputs()
+    }
   }
   private configure() {
     this.element.addEventListener('submit', this.submitHandler)
