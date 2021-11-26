@@ -116,6 +116,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement
     this.element.id = `${this.type}-projects`
     this.attach()
+    this.renderContent()
   }
   private renderContent() {
     const listId = `${this.type}-projects-list`
@@ -126,3 +127,8 @@ class ProjectList {
     this.hostElement.insertAdjacentElement('beforeend', this.element)
   }
 }
+
+
+const prjInput = new ProjectInput()
+const activePrjList = new ProjectList('active')
+const finishedPrjList = new ProjectList('finished')
