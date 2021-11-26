@@ -1,3 +1,12 @@
+interface Validatable {
+  value: string | number
+  required?: boolean
+  minLength?: number
+  maxLength?: number
+  min?: number
+  max?: number
+}
+
 function Autobind(target: any, methodName: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value
   const adjustedDescriptor: PropertyDescriptor = {
@@ -36,8 +45,7 @@ class ProjectInput {
     const enteredTitle = this.titleInputElement.value
     const enteredDescription = this.descriptionInputElement.value
     const enteredPeople = this.peopleInputElement.value
-    if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredPeople.trim().length === 0) return
-    else return [enteredTitle, enteredDescription, +enteredPeople]
+    validate()
   }
   private clearInputs() {
     this.titleInputElement.value = ''
