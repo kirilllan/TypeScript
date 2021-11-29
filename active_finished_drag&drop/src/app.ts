@@ -19,6 +19,9 @@ class ProjectState {
       people: numOfPeople
     }
     this.projects.push(newProject)
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice())
+    }
   }
 }
 const projectState = ProjectState.getInstance()
@@ -135,15 +138,29 @@ class ProjectList {
   templateElement: HTMLTemplateElement
   hostElement: HTMLDivElement
   element: HTMLElement
+  assignedProjects: any[] = []
   constructor(private type: 'active' | 'finished') {
     this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')! as HTMLTemplateElement
     this.hostElement = document.getElementById('app')! as HTMLDivElement
+    this.assignedProjects = []
 
     const importedNode = document.importNode(this.templateElement.content, true)
     this.element = importedNode.firstElementChild as HTMLElement
     this.element.id = `${this.type}-projects`
+    projectState.addListener((projects: any) => {
+      this.assignedProjects = projects
+      this.renderProjects()
+    })
     this.attach()
     this.renderContent()
+  }
+  private renderProjects() {
+    const listEl = document.getElementById(`${this.type}-projects-list`)
+    for (const projectItem of this.assignedProjects) {
+      const listItem = document.createElement('li')
+      listItem.textContent = projectItem.title
+      listEl?.appendChild(listItem)
+    }
   }
   private renderContent() {
     const listId = `${this.type}-projects-list`
