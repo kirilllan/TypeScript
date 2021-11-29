@@ -6,7 +6,7 @@ class Project {
 
 class ProjectState {
   private listeners: any[] = []
-  private projects: any[] = []
+  private projects: Project[] = []
   private static instance: ProjectState
   private constructor() { }
   static getInstance() {
@@ -18,12 +18,7 @@ class ProjectState {
     this.listeners.push(listenerFn)
   }
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: '' + Math.random(),
-      title: title,
-      description: description,
-      people: numOfPeople
-    }
+    const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active)
     this.projects.push(newProject)
     for (const listenerFn of this.listeners) {
       listenerFn(this.projects.slice())
@@ -144,7 +139,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement
   hostElement: HTMLDivElement
   element: HTMLElement
-  assignedProjects: any[] = []
+  assignedProjects: Project[]
   constructor(private type: 'active' | 'finished') {
     this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')! as HTMLTemplateElement
     this.hostElement = document.getElementById('app')! as HTMLDivElement
