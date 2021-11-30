@@ -155,28 +155,13 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   abstract renderContent(): void
 }
 
-class ProjectList {
-  templateElement: HTMLTemplateElement
-  hostElement: HTMLDivElement
-  element: HTMLElement
+class ProjectList extends Component<HTMLDivElement, HTMLElement>{
   assignedProjects: Project[]
   constructor(private type: 'active' | 'finished') {
-    this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')! as HTMLTemplateElement
-    this.hostElement = document.getElementById('app')! as HTMLDivElement
+    super('project-list', 'app', false, `${type}-projects`)
     this.assignedProjects = []
 
-    const importedNode = document.importNode(this.templateElement.content, true)
-    this.element = importedNode.firstElementChild as HTMLElement
     this.element.id = `${this.type}-projects`
-    projectState.addListener((projects: Project[]) => {
-      const relevantProjects = projects.filter(project => {
-        if (this.type === 'active') return project.status === ProjectStatus.Active
-        return project.status === ProjectStatus.Finished
-      })
-      this.assignedProjects = relevantProjects
-      this.renderProjects()
-    })
-    this.attach()
     this.renderContent()
   }
   private renderProjects() {
@@ -188,13 +173,20 @@ class ProjectList {
       listEl.appendChild(listItem)
     }
   }
-  private renderContent() {
+  configure() {
+    projectState.addListener((projects: Project[]) => {
+      const relevantProjects = projects.filter(project => {
+        if (this.type === 'active') return project.status === ProjectStatus.Active
+        return project.status === ProjectStatus.Finished
+      })
+      this.assignedProjects = relevantProjects
+      this.renderProjects()
+    })
+  }
+  renderContent() {
     const listId = `${this.type}-projects-list`
     this.element.querySelector('ul')!.id = listId
     this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' projects'
-  }
-  private attach() {
-    this.hostElement.insertAdjacentElement('beforeend', this.element)
   }
 }
 
