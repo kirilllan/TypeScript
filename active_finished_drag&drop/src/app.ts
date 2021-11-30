@@ -70,28 +70,42 @@ function Autobind(target: any, methodName: string, descriptor: PropertyDescripto
   return adjustedDescriptor
 }
 
-class ProjectInput {
+
+abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   templateElement: HTMLTemplateElement
-  hostElement: HTMLDivElement
-  element: HTMLFormElement
+  hostElement: T
+  element: U
+  constructor(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string) {
+    this.templateElement = <HTMLTemplateElement>document.getElementById(templateId)! as HTMLTemplateElement
+    this.hostElement = document.getElementById(hostElementId)! as T
+    const importedNode = document.importNode(this.templateElement.content, true)
+    this.element = importedNode.firstElementChild as U
+    if (newElementId) this.element.id = newElementId
+    this.attach(insertAtStart)
+  }
+  private attach(insertAtStart: boolean) {
+    this.hostElement.insertAdjacentElement(insertAtStart ? 'afterbegin' : 'beforeend', this.element)
+  }
+  abstract configure(): void
+  abstract renderContent(): void
+}
+
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement
   descriptionInputElement: HTMLInputElement
   peopleInputElement: HTMLInputElement
   constructor() {
-    this.templateElement = <HTMLTemplateElement>document.getElementById('project-input')!
-    this.hostElement = document.getElementById('app')! as HTMLDivElement
-
-    const importedNode = document.importNode(this.templateElement.content, true)
-    this.element = importedNode.firstElementChild as HTMLFormElement
-    this.element.id = 'user-input'
-
+    super('project-input', 'app', true, 'user-input')
     this.titleInputElement = this.element.querySelector('#title') as HTMLInputElement
     this.descriptionInputElement = this.element.querySelector('#description') as HTMLInputElement
     this.peopleInputElement = this.element.querySelector('#people') as HTMLInputElement
 
     this.configure()
-    this.attach()
   }
+  configure() {
+    this.element.addEventListener('submit', this.submitHandler)
+  }
+  renderContent() { }
   private gatherUserInput(): [string, string, number] | void {
     const enteredTitle = this.titleInputElement.value
     const enteredDescription = this.descriptionInputElement.value
@@ -128,31 +142,6 @@ class ProjectInput {
       this.clearInputs()
     }
   }
-  private configure() {
-    this.element.addEventListener('submit', this.submitHandler)
-  }
-  private attach() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.element)
-  }
-}
-
-abstract class Component<T extends HTMLElement, U extends HTMLElement> {
-  templateElement: HTMLTemplateElement
-  hostElement: T
-  element: U
-  constructor(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string) {
-    this.templateElement = <HTMLTemplateElement>document.getElementById(templateId)! as HTMLTemplateElement
-    this.hostElement = document.getElementById(hostElementId)! as T
-    const importedNode = document.importNode(this.templateElement.content, true)
-    this.element = importedNode.firstElementChild as U
-    if (newElementId) this.element.id = newElementId
-    this.attach(insertAtStart)
-  }
-  private attach(insertAtStart: boolean) {
-    this.hostElement.insertAdjacentElement(insertAtStart ? 'afterbegin' : 'beforeend', this.element)
-  }
-  abstract configure(): void
-  abstract renderContent(): void
 }
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
@@ -160,8 +149,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
   constructor(private type: 'active' | 'finished') {
     super('project-list', 'app', false, `${type}-projects`)
     this.assignedProjects = []
-
-    this.element.id = `${this.type}-projects`
+    this.configure()
     this.renderContent()
   }
   private renderProjects() {
