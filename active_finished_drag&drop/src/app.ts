@@ -147,6 +147,12 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   }
 }
 
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+  constructor(hostId: string, id: string) {
+    super('single-project', hostId, false, id)
+  }
+}
+
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
   assignedProjects: Project[]
   constructor(private type: 'active' | 'finished') {
