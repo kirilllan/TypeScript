@@ -158,7 +158,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   }
 }
 
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
   private project: Project
   get persons() {
     if (this.project.people === 1) return '1 person'
@@ -170,7 +170,13 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     this.configure()
     this.renderContent()
   }
-  configure() { }
+  @Autobind
+  dragStartHandler(event: DragEvent) { }
+  dragEndHandler(_: DragEvent) { }
+  configure() {
+    this.element.addEventListener('dragstart', this.dragStartHandler)
+    this.element.addEventListener('dragend', this.dragEndHandler)
+  }
   renderContent() {
     this.element.querySelector('h2')!.textContent = this.project.title
     this.element.querySelector('h3')!.textContent = this.persons + ' assigned'
