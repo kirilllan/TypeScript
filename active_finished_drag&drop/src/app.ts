@@ -171,7 +171,10 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
     this.renderContent()
   }
   @Autobind
-  dragStartHandler(event: DragEvent) { }
+  dragStartHandler(event: DragEvent) {
+    event.dataTransfer?.setData('text/plain', this.project.id)
+    event.dataTransfer!.effectAllowed = 'move'
+  }
   dragEndHandler(_: DragEvent) { }
   configure() {
     this.element.addEventListener('dragstart', this.dragStartHandler)
