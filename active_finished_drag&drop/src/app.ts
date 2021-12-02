@@ -40,6 +40,10 @@ class ProjectState extends State<Project> {
       listenerFn(this.projects.slice())
     }
   }
+  moveProject(projectId: string, newStatus: ProjectStatus) {
+    const project = this.projects.find(prj => prj.id === projectId)
+    if (project) project.status = newStatus
+  }
 }
 const projectState = ProjectState.getInstance()
 
@@ -203,7 +207,9 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
       listEl.classList.add('droppable')
     }
   }
-  dropHandler(event: DragEvent) { }
+  dropHandler(event: DragEvent) {
+    const projectId = event.dataTransfer?.getData('text/plain')
+  }
   @Autobind
   dragLeaveHandler(event: DragEvent) {
     const listEl = this.element.querySelector('ul')!
