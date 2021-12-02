@@ -36,13 +36,17 @@ class ProjectState extends State<Project> {
   addProject(title: string, description: string, numOfPeople: number) {
     const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active)
     this.projects.push(newProject)
-    for (const listenerFn of this.listeners) {
-      listenerFn(this.projects.slice())
-    }
+    this.updateListeners()
   }
   moveProject(projectId: string, newStatus: ProjectStatus) {
     const project = this.projects.find(prj => prj.id === projectId)
     if (project) project.status = newStatus
+    this.updateListeners()
+  }
+  private updateListeners() {
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice())
+    }
   }
 }
 const projectState = ProjectState.getInstance()
@@ -207,8 +211,10 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
       listEl.classList.add('droppable')
     }
   }
+  @Autobind
   dropHandler(event: DragEvent) {
-    const projectId = event.dataTransfer?.getData('text/plain')
+    const projectId = event.dataTransfer!.getData('text/plain')
+    projectState.moveProject(projectId, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished)
   }
   @Autobind
   dragLeaveHandler(event: DragEvent) {
